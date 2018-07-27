@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+
+        <script>
+        function viewdiv(id, link) {
+            var el = document.getElementById(id);
+            var link = document.getElementById(link);
+            if (el.style.display == "block") {
+                el.style.display = "none";
+                link.innerText = link.getAttribute('data-text-hide');
+            } else {
+                el.style.display = "block";
+                link.innerText = link.getAttribute('data-text-show');
+            }
+        }
+
+        </script>
+    </head>
+    <body>
+        <a id="filterLink" href="javascript:void(0);" onclick="viewdiv('divFilter','filterLink');" data-text-show="Скрыть фильтр" data-text-hide="Показать фильтр">Показать фильтр</a>
+        <div id="divFilter" style="display:none;">text text text</div>
+    </body>
+</html>

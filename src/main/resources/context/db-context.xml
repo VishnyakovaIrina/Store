@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util-4.3.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- Загрузка инфо о подключении к БД из файла -->
+    <util:properties id="dbSettings" location="classpath:settings/db-settings.properties"/>
+
+    <!-- Бин "Инфо о подключении к БД" -->
+    <bean id="connectionInfo" class="home.ivishnyakova.store.config.db.ConnectionInfo">
+        <property name="driver" value="#{dbSettings['driver']}" />
+        <property name="url" value="#{dbSettings['url']}" />
+        <property name="userName" value="#{dbSettings['userName']}" />
+        <property name="password" value="#{dbSettings['password']}" />
+    </bean>
+
+    <!-- Бин "Источник данных, связанный с БД" -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="#{connectionInfo.driver}" />
+        <property name="url" value="#{connectionInfo.url}" />
+        <property name="username" value="#{connectionInfo.userName}" />
+        <property name="password" value="#{connectionInfo.password}" />
+    </bean>
+
+    <!-- Бин "Фабрика соединений типа Connection к БД" -->
+    <bean id="connectionFactory" class="home.ivishnyakova.store.config.db.ConnectionFactory">
+        <constructor-arg ref="connectionInfo" />
+    </bean>
+
+    <!-- Бин для выполнения запросов к БД, используя map именованных параметров -->
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>
+
+    <!-- Бин для выполнения запросов к БД -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>
+
+    <!-- Бин для выполнения sql-скриптов (для создания таблиц БД и заполнения их данными) -->
+    <bean id="databaseScriptExecutor" init-method="init" class="home.ivishnyakova.store.dao.storeDao.DatabaseScriptExecutor">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>

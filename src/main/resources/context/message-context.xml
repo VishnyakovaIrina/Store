@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util-4.3.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- Загрузка текста сообщений из файла -->
+    <util:properties id="messages" location="classpath:settings/messages.properties"/>
+
+    <!-- Map ошибок, содержащая код http ответа сервера, описание и причина ошибки -->
+    <bean  id="errors" class="home.ivishnyakova.store.message.ErrorProperties" >
+        <property name="errors">
+            <map>
+
+                <entry key="NO_SCRIPT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_SCRIPT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_SCRIPT_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="ILLEGAL_JDBC">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['ILLEGAL_JDBC_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="ROOT_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['ROOT_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['ROOT_CATEGORY_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="CHANGE_LEVEL_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['CHANGE_LEVEL_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['CHANGE_LEVEL_CATEGORY_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NO_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NO_CATEGORIES">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_CATEGORIES_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_CATEGORIES_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NO_CATEGORIES_BY_LEVEL">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_CATEGORIES_BY_LEVEL_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_CATEGORIES_BY_LEVEL_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NO_CATEGORY_FOR_SUBCATEGORIES">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_CATEGORY_FOR_SUBCATEGORIES_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_CATEGORY_FOR_SUBCATEGORIES_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_VALID_NEW_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_NEW_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_NEW_CATEGORY_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_VALID_NEW_SUBCATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_NEW_SUBCATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_NEW_SUBCATEGORY_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_INSERTED_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_INSERTED_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_INSERTED_SUBCATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_INSERTED_SUBCATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_SUBCATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_UPDATED_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_UPDATED_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NOT_UPDATED_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_UPDATED_SUBCATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_UPDATED_SUBCATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_SUBCATEGORY_CAUSE']}</value>
+                                <value>#{messages['NOT_UPDATED_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_DELETED_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_DELETED_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_DELETED_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_DELETED_SUBCATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_DELETED_SUBCATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_DELETED_CATEGORY_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_VALID_UPDATED_CATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_UPDATED_CATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_UPDATED_CATEGORY_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_VALID_UPDATED_SUBCATEGORY">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_UPDATED_SUBCATEGORY_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_UPDATED_SUBCATEGORY_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+
+                <entry key="NO_PRODUCT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_PRODUCT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_PRODUCT_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NO_PRODUCTS">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_PRODUCTS_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_PRODUCTS_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_VALID_NEW_PRODUCT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_NEW_PRODUCT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_NEW_PRODUCT_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_INSERTED_PRODUCT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_INSERTED_PRODUCT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_PRODUCT_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_UPDATED_PRODUCT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_UPDATED_PRODUCT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_UPDATED_PRODUCT_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_DELETED_PRODUCT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_DELETED_PRODUCT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_DELETED_PRODUCT_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <entry key="NOT_VALID_UPDATED_PRODUCT">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_UPDATED_PRODUCT_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_UPDATED_PRODUCT_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+
+                <!-- ошибки при работе с производителем -->
+                <!-- производитель не найден -->
+                <entry key="NO_PRODUCER">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_PRODUCER_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_PRODUCER_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <!--производители не найдены-->
+                <entry key="NO_PRODUCERS">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NO_PRODUCERS_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NO_PRODUCERS_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <!--новый производитель задан не корректно-->
+                <entry key="NOT_VALID_NEW_PRODUCER">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_NEW_PRODUCER_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_NEW_PRODUCER_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <!--новый производитель не добавлен-->
+                <entry key="NOT_INSERTED_PRODUCER">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['INTERNAL_SERVER_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_INSERTED_PRODUCER_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_PRODUCER_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <!--производитель не обновлен-->
+                <entry key="NOT_UPDATED_PRODUCER">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_UPDATED_PRODUCER_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_INSERTED_PRODUCER_CAUSE']}</value>
+                                <value>#{messages['NOT_UPDATED_PRODUCER_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <!--производитель для удаления не найден-->
+                <entry key="NOT_DELETED_PRODUCER">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['NOT_FOUND_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_DELETED_PRODUCER_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_DELETED_PRODUCER_CAUSE']}</value>
+                                <value>#{messages['NO_CONNECTION_CAUSE']}</value>
+                                <value>#{messages['SERVER_ERROR_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+                <!-- новые данные производителя для обновления не корректны -->
+                <entry key="NOT_VALID_UPDATED_PRODUCER">
+                    <bean class="home.ivishnyakova.store.message.ErrorMessage">
+                        <property name="code" value="#{messages['BAD_REQUEST_ERROR']}"/>
+                        <property name="message" value="#{messages['NOT_VALID_UPDATED_PRODUCER_MSG']}"/>
+                        <property name="cause">
+                            <list>
+                                <value>#{messages['NOT_VALID_UPDATED_PRODUCER_CAUSE']}</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+
+            </map>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,507 @@
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3, h4 {
+        font-family: sans-serif;
+        color:#0431B4;
+    }
+    h1{
+        font-size: 32px;
+    }
+    h2{
+        font-size: 22px;
+    }
+    h3{
+        font-size: 18px;
+    }
+    h4{
+        font-size: 16px;
+    }
+
+
+    body{
+        margin:0px;
+
+        position:relative;
+        float:left;
+        min-width: calc(100% - 10px);
+        min-height: calc(100% - 10px);
+
+        height:calc(100% - 10px);
+        width:calc(100% - 10px);
+
+        font-size:17px;
+        font-family: sans-serif;
+
+    }
+/*  Контейнер, содержащий заголовок + контент */
+    #container{
+        padding: 5px;
+        position:relative;
+        float: center;
+        height:100%
+    }
+/*  Контейнер, содержащий основной контент страницы */
+    #content{
+        text-align: center;
+
+        padding: 5px;
+        width: calc(100% - 4px);
+        height : 570px;
+        overflow : auto;
+        float:left;
+    }
+    #content h3{
+        color: #003182;
+    }
+
+/* Контейнер "Заголовок страницы"  */
+    #header{
+        height:40px;
+        min-height:40px;
+        margin:0px;
+        border-bottom:1px solid #ccc;
+        padding: 20px 0 10px 0;
+        text-align: center;
+        float: center;
+    }
+
+/* ================ МЕНЮ страниц ==================== */
+    #menuFilter, #menuProducer{
+        height:40px;
+        min-width: calc(100%-20px);
+        padding:0 2px 0 2px;
+        margin:2px;
+    }
+
+/*  Меню витрины магазина */
+    #menuFilter{
+        text-align: right;
+    }
+/* Меню  админ.части "Производители" */
+    #menuProducer{
+        text-align: center;
+    }
+
+/*  Пункты меню */
+    #menuFilter a, #menuProducer a{
+        display:inline-block;
+        width:220px;
+        padding:7px 10px 7px 10px;
+        font-size: 18px;
+    }
+
+/*  Пункт меню витрины магазина */
+    #menuFilter a{
+        text-decoration:underline;
+        text-align:center;
+        border: 1px solid #FFFFFF;
+    }
+
+/*  Пункт меню админ.части "Производители" */
+    #menuProducer a{
+        text-decoration:none;
+        text-align:center;
+        border: 1px solid #000000;
+        color: #000000;
+        background: #BDBDBD;
+    }
+
+/*  Наведение на пункт меню витрины магазина */
+    #menuFilter a:hover{
+        text-decoration:underline;
+        color: #FFFFFF; /* Цвет ссылки при наведении на нее курсора мыши */
+        background: #0431B4; /* Цвет фона */
+    }
+
+/*  Наведение на пункт меню витрины магазина */
+    #menuProducer a:hover{
+        text-decoration:underline;
+        color: #FFFFFF;
+    }
+/* ================ КОНЕЦ МЕНЮ ================================ */
+
+    #filter{
+        margin : 0px 30px;
+        border : 1px solid #ccc;
+        width : calc(100% - 60px);
+    }
+
+    #goodsFilterRegion{
+        display : none;
+    }
+
+/* ================ ТАБЛИЦЫ НА СТРАНИЦАХ ========================= */
+/*  Таблица на страницах */
+    table{
+       border: 1px solid;
+       margin: 10px;
+       background-color: #ffffff;
+       border-collapse: collapse; /* Убираем двойные линии между ячейками */
+    }
+/*  Таблица "Прозводители" */
+    table#tProducers {
+        width:auto;
+        margin-left: 30px;
+    }
+
+/*  Заголовок таблицы и его ячеек */
+    th{
+        background: #BDBDBD;
+    }
+    th, tr{
+        border: 1px solid #000000;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    #tFilterGoods,
+    #tProducers,
+    #tCategories, #tSubCategories,
+    #tGoods{
+        box-shadow: 2px 0 7px #b3b3b3, -2px 0 7px #b3b3b3;
+    }
+
+/*  Заголовок таблиц "Товары" (на витрине), "Производители" */
+    table thead{
+         font-size: 16px;
+         font-weight: bold;
+         border: 1px solid #000000;
+         background-color: #0162b2;
+    }
+
+    #tFilterGoods thead{
+        width:calc(100% - 20px);
+    }
+
+    #tProducers tbody tr:nth-child(even),
+    #tGoods tbody tr:nth-child(even),
+    #tFilterGoods tbody tr:nth-child(even),
+    #tCategories  tbody tr:nth-child(even),
+    #tSubCategories  tbody tr:nth-child(even){
+        background: #f7f5d8; /* Зебра */
+    }
+
+    td{
+        font-size: 14px;
+        padding: 7px;
+        border: 1px solid #000000;
+    }
+
+/*     Ширины столбцов для таблицы "Товары" витрины магазина */
+    #idFilterCol{
+        width : 50px;
+    }
+    #nameFilterCol{
+        width : 150px;
+    }
+    #priceFilterCol{
+        width : 60px;
+    }
+    #categoryFilterCol{
+        width : 200px;
+    }
+    #producerFilterCol{
+        width : 110px;
+    }
+    #storageFilterCol{
+        width : 50px;
+    }
+
+    .descCell{
+        text-align: left;
+    }
+
+/*     Столбцы таблицы "Производители"  */
+    #idHeaderProducerCol{
+        width : 50px;
+    }
+    #nameHeaderProducerCol{
+        width : 300px;
+    }
+    #idProducerCol{
+        text-align : center;
+    }
+
+/* ==========  КОНЕЦ ТАБЛИЦЫ НА СТРАНИЦАХ  ======================= */
+
+/*  Надпись - описание элемента ввода инфо  */
+    .Label{
+        text-align: right;
+        padding: 10px;
+        width: 200px;
+        font-size: 16px;
+        color:#003182;
+        display: inline-block;
+    }
+
+/* ==========  ЭЛЕМЕНТЫ ФИЛЬТРА НА ВИТРИНЕ МАГАЗИНА  ================ */
+    #formFilterGoods{
+        margin: 10px;
+    }
+    #filterIdCategory{
+        width: 435px;
+    }
+    #filterIdProducer{
+        width: 200px;
+    }
+    #filterMinPrice{
+        width: 80px;
+    }
+    #filterMaxPrice{
+        width: 80px;
+    }
+
+/* ========== КНОПКИ ======================= */
+
+    .buttonForm{
+        width: 120px;
+        padding: 5px;
+        color: #fff;
+        background: #0431B4;
+        font-size: 16px;
+        height: 30px;
+    }
+
+/*  Кнопки на странице "Производители"  */
+    #btnAddProducer, #btnUpdateProducer, #btnDeleteProducer{
+        width: 100px;
+        padding: 5px;
+        color: #fff;
+        background: #0431B4;
+        font-size: 12px;
+        height: 30px;
+        margin : 5px;
+    }
+
+/* ============== Контент на странице "Производители" ================== */
+
+/*  Надпись для названия производителя  */
+    #labelNameProducer{
+        width: 120px;
+    }
+/*  Поле для ввода названия производителя  */
+    .inputProducerName{
+        width : 300px;
+    }
+/*  Заголовок блока для ввода названия производителя  */
+    #headerAddProducer, #headerAddGoods{
+        text-align : center;
+    }
+/*  Блок для ввода названия производителя  */
+    #addProducerRegion{
+        margin : 15px 30px;
+        border : 1px solid #ccc;
+        width : 620px;
+    }
+/*  Блок для отображения таблицы производителей  */
+    #dataProducers{
+        height : 600px;
+        overflow : auto;
+        width : 670px;
+    }
+/* ==== КОНЕЦ Контент на странице "Производители" ================== */
+
+/*  Настройки страницы для отображения ошибок  */
+    .errorInfo{
+        text-align : center;
+        margin : 30px;
+    }
+
+    #errorCode{
+        color : #DC143C;
+        margin-bottom : 30px;
+    }
+
+    #errorCause{
+        text-align : center;
+        margin : 10px;
+    }
+    #errorCause h3, #errorCause h4{
+        color : #000000;
+    }
+
+/* ==== Cтраница "Администрирование товаров" ================== */
+
+    .titleGoods{
+        margin : 5px 0px;
+        font-weight : bold;
+        font-style : italic;
+    }
+
+    #idGoodsCol{
+        text-align : center;
+    }
+
+    #nameHeaderGoodsCol{
+        width : 400px;
+    }
+
+    .editNameGoods{
+        width : 400px;
+    }
+
+    .editCategoryGoods{
+        width : 400px;
+    }
+
+    .editProducerGoods{
+        width : 400px;
+    }
+
+    .editPriceGoods{
+        width : 100px;
+        text-align : right;
+    }
+
+    #inStorageGoodsCol{
+        text-align : center;
+    }
+
+    textarea{
+        resize: none;
+    }
+
+    .editDescriptionGoods{
+         width  : 300px;
+         height : 120px;
+         font-size : 14px;
+    }
+
+/*  Кнопки на странице "Производители"  */
+    #btnAddGoods, #btnUpdateGoods, #btnDeleteGoods{
+        width: 90px;
+        padding: 5px;
+        color: #fff;
+        background: #0431B4;
+        font-size: 12px;
+        height: 30px;
+        margin : 3px;
+    }
+
+    #addGoodsRegion{
+        margin : 15px;
+        border : 1px solid #ccc;
+        width : calc(100%-60px);
+    }
+
+    .inputGoods{
+        width : 400px;
+    }
+
+    #tAddGoods{
+        border : 0px;
+        margin : 0px;
+    }
+
+    #tAddGoods tr, #tAddGoods td,
+    #tDataCategories tr, #tDataCategories td,
+    #tAddCategory tr, #tAddCategory td{
+        border : 0px;
+    }
+
+    .inputPriceGoods{
+        width : 100px;
+        text-align : right;
+    }
+
+    .inputDescriptionGoods{
+         width  : 470px;
+         margin-right : 10px;
+         height : 100px;
+         font-size : 14px;
+    }
+
+    #divBtnAddGoods{
+        text-align : right;
+        margin-right : 10px;
+    }
+
+    #labelInputDesc{
+        text-align : left;
+        font-size: 16px;
+        color:#003182;
+    }
+
+    #divInputDescGoods{
+        text-align : left;
+    }
+
+    #dataGoods{
+        overflow : auto;
+        height   : 520px;
+    }
+
+/* ====КОНЕЦ Cтраница "Администрирование товаров" ================== */
+
+/* ==== Cтраница "Администрирование категорий" ================== */
+
+    .headerCategory{
+        text-align : center;
+    }
+
+    table#tAddCategory, table#tDataCategories{
+       border : 0px;
+    }
+
+    #tCategories th, #tSubCategories th,
+    #tCategories td, #tSubCategories td,
+    #tCategories tr, #tSubCategories tr{
+        border: 1px solid #000000;
+    }
+
+    #tDataCategories td{
+        vertical-align : top;
+        padding : 0px;
+    }
+
+    #tAddCategory td{
+        vertical-align : top;
+    }
+
+    #tCategories td, #tSubCategories td{
+        padding : 10px;
+        vertical-align : middle;
+    }
+
+    .idCategoryCol{
+        text-align : center;
+    }
+
+/*  Кнопки на странице "Администрирование категорий"  */
+    .btnCategory{
+        width: 90px;
+        padding: 5px;
+        color: #fff;
+        background: #0431B4;
+        font-size: 12px;
+        height: 30px;
+        margin : 0px;
+    }
+
+    .titleCategories{
+        margin : 5px 0px;
+        font-weight : bold;
+        font-style : italic;
+    }
+
+    .inputCategory{
+        width : 250px;
+    }
+/*  Надпись - описание элемента ввода инфо  */
+    .LabelNameCategory{
+        text-align: right;
+        padding: 10px;
+        width: 150px;
+        font-size: 16px;
+        color:#003182;
+        display: inline-block;
+    }
+
+    #dataCategories, #dataSubCategories{
+        overflow : auto;
+        height   : 550px;
+    }
+
+/* ====КОНЕЦ Cтраница "Администрирование категорий" ================== */
